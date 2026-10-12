@@ -563,7 +563,7 @@
                             На святі діє міжнародний суворий закон: <strong class="text-cyan-400">100% без алкоголю</strong>! Тільки безалкогольний двіж та солодкі напої 🥤
                         </p>
                         <button id="confirm-alc-dialogue" class="w-full py-3.5 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-400 hover:to-rose-500 text-slate-950 font-black rounded-xl transition uppercase tracking-wider text-sm shadow-lg shadow-red-500/20">
-                            Зрозуміло, скасовую 🙅‍♂️
+                            Каюсь, відміняю 🙅‍♂️
                         </button>
                     </div>
                 `;
@@ -638,7 +638,7 @@
                             (Автоматично додаємо шашлик до твого меню 😉)
                         </p>
                         <button id="confirm-lavash-dialogue" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black rounded-xl transition uppercase tracking-wider text-sm shadow-lg shadow-cyan-500/20">
-                            Зрозуміло, давай шашлик! 🥩
+                            Ну давай той шашлик! 🥩
                         </button>
                     </div>
                 `;
@@ -742,8 +742,8 @@
 
             // Google Calendar direct link builder
             const calTitle = encodeURIComponent("День Народження Назара 🚀");
-            const calDetails = encodeURIComponent("Двіж, шашлики, піца та святкування! Локація: м. Львів, вул. Кобилиці 13/2");
-            const calLocation = encodeURIComponent("м. Львів, вул. Кобилиці 13/2");
+            const calDetails = encodeURIComponent("Двіж, шашлики, піца та святкування! Локація: м. Львів, вул. Кобилиці 13/2(десь там +-");
+            const calLocation = encodeURIComponent("в районі м. Львів, вул. Кобилиці 13/2");
             const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&dates=20261015T150000Z/20261015T210000Z&details=${calDetails}&location=${calLocation}`;
             
             document.getElementById('calendar-link').href = gCalUrl;
