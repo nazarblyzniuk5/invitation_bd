@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="uk" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Запрошення на День Народження Назара! 🚀</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0B132B',
+                            800: '#1C2541',
+                            700: '#3A506B',
+                            500: '#00B4D8',
+                            400: '#5BC0BE',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0B132B;
+            color: #F1F5F9;
+        }
+        .glass-card {
+            background: rgba(28, 37, 65, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(91, 192, 190, 0.2);
+        }
+        .glass-card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(0, 180, 216, 0.6);
+            box-shadow: 0 10px 30px -10px rgba(0, 180, 216, 0.3);
+            transform: translateY(-2px);
+        }
+        /* Custom floating background particles */
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+        .bg-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: floatParticle 10s linear infinite;
+        }
+        /* Pulse border glow */
+        .glow-border {
+            box-shadow: 0 0 20px rgba(0, 180, 216, 0.35);
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-x-hidden flex flex-col justify-between selection:bg-cyan-500 selection:text-slate-900">
+
+    <div id="bg-particles-container" class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div class="absolute top-10 left-10 w-96 h-96 bg-cyan-600/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl"></div>
+    </div>
+
+    <header class="relative z-10 w-full p-4 md:p-6 flex justify-between items-center max-w-5xl mx-auto">
+        <div class="flex items-center space-x-3">
+            <span class="text-3xl">🚀</span>
+            <span class="text-xl font-black tracking-wider uppercase bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                NAZAR'S B-DAY
+            </span>
+        </div>
+        <button id="music-toggle-btn" class="glass-card px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider hover:bg-slate-800 transition flex items-center space-x-2 text-cyan-400 border-cyan-500/30">
+            <i class="fa-solid fa-volume-high"></i>
+            <span id="music-btn-text">Звуковий супровід</span>
+        </button>
+    </header>
+
+    <main class="relative z-10 flex-grow flex items-center justify-center px-4 py-8">
+        
+        <!-- Welcome Screen -->
+        <div id="welcome-card" class="glass-card max-w-xl w-full p-8 md:p-10 rounded-3xl text-center shadow-2xl transition-all duration-500 border-cyan-500/30">
+            <div class="inline-flex p-5 bg-cyan-500/10 text-cyan-400 rounded-2xl text-5xl mb-6 ring-1 ring-cyan-500/30 glow-border">
+                ⚡
+            </div>
+            <h1 class="text-3xl md:text-4xl font-extrabold mb-4 uppercase tracking-tight text-white">
+                Ухти пухти! Назар робить двіж!
+            </h1>
+            <p class="text-slate-300 text-base md:text-lg mb-8 leading-relaxed">
+                Готуйся до файного святкування. Але перш ніж отримати перепустку, мусиш пройти швидкий тест на міцність! 
+            </p>
+            <button id="start-quest-btn" class="w-full py-4 px-6 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black rounded-2xl shadow-lg shadow-cyan-500/20 transition transform active:scale-95 flex items-center justify-center space-x-3 text-lg uppercase tracking-wider">
+                <span>Пройти опитування</span>
+                <i class="fa-solid fa-bolt"></i>
+            </button>
+        </div>
+
+        <!-- Final Invitation Card (Hidden initially) -->
+        <div id="invitation-container" class="hidden max-w-3xl w-full mx-auto space-y-6">
+            <div class="glass-card p-8 md:p-12 rounded-3xl text-center shadow-2xl relative overflow-hidden border-cyan-500/40">
+                <div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none text-9xl text-cyan-400">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                
+                <span class="inline-block px-4 py-1.5 rounded-full bg-cyan-500/10 text-cyan-300 font-bold text-xs uppercase tracking-widest border border-cyan-500/20 mb-4">
+                    Офіційний пропуск здобуто 🎯
+                </span>
+
+                <h2 class="text-3xl md:text-5xl font-black uppercase tracking-tight mb-4 text-white">
+                    День Народження <span class="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Назара</span>!
+                </h2>
+
+                <p class="text-slate-300 text-base md:text-lg mb-8 max-w-xl mx-auto leading-relaxed">
+                    Ти в списку обраних! Готуйся до якісного відпочинку, смачного шашлика, гарячої піци та драйвового вечора в колі своїх!
+                </p>
+
+                <!-- Event Info Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 text-left">
+                    <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-cyan-500/20">
+                        <div class="p-3.5 bg-cyan-500/10 text-cyan-400 rounded-xl text-2xl">
+                            <i class="fa-regular fa-calendar-check"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Дата</div>
+                            <div class="font-extrabold text-white text-lg">15 Жовтня (Четвер)</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 border-cyan-500/20">
+                        <div class="p-3.5 bg-blue-500/10 text-blue-400 rounded-xl text-2xl">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div>
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Час збору</div>
+                            <div class="font-extrabold text-white text-lg">О 17:00 точність ⏰</div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-4 rounded-2xl flex items-center space-x-4 md:col-span-2 border-cyan-500/20">
+                        <div class="p-3.5 bg-cyan-500/10 text-cyan-400 rounded-xl text-2xl">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div class="flex-grow">
+                            <div class="text-xs text-slate-400 uppercase font-bold tracking-wider">Локація</div>
+                            <div class="font-extrabold text-white text-lg">м. Львів, вул. Кобилиці 13/2</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Food Menu Highlights Section -->
+                <div class="glass-card p-6 rounded-2xl text-left mb-8 border-cyan-500/20 bg-slate-900/40">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-cyan-400 mb-3 flex items-center space-x-2">
+                        <i class="fa-solid fa-utensils"></i>
+                        <span>На меню очікується:</span>
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700">🥩 Соковитий Шашлик</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700">🍕 Гаряча Піца</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700">🍟 Апетитна Картопля</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700">🌯 Лаваші з начинкою</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-slate-800 text-slate-200 text-xs font-semibold border border-slate-700">🥤 Солодкі напої</span>
+                        <span class="px-3 py-1.5 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-bold border border-emerald-500/30">🚫 100% Без алкоголю (да да Макс)</span>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer Block -->
+                <div class="mb-8">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">Відлік до старту цього дійства:</h3>
+                    <div class="grid grid-cols-4 gap-2 md:gap-4 text-center">
+                        <div class="glass-card p-3 md:p-4 rounded-2xl border-cyan-500/20">
+                            <div id="days" class="text-2xl md:text-4xl font-black text-cyan-400">00</div>
+                            <div class="text-[10px] md:text-xs text-slate-400 uppercase font-bold mt-1">Днів</div>
+                        </div>
+                        <div class="glass-card p-3 md:p-4 rounded-2xl border-cyan-500/20">
+                            <div id="hours" class="text-2xl md:text-4xl font-black text-blue-400">00</div>
+                            <div class="text-[10px] md:text-xs text-slate-400 uppercase font-bold mt-1">Годин</div>
+                        </div>
+                        <div class="glass-card p-3 md:p-4 rounded-2xl border-cyan-500/20">
+                            <div id="minutes" class="text-2xl md:text-4xl font-black text-cyan-400">00</div>
+                            <div class="text-[10px] md:text-xs text-slate-400 uppercase font-bold mt-1">Хвилин</div>
+                        </div>
+                        <div class="glass-card p-3 md:p-4 rounded-2xl border-cyan-500/20">
+                            <div id="seconds" class="text-2xl md:text-4xl font-black text-blue-400">00</div>
+                            <div class="text-[10px] md:text-xs text-slate-400 uppercase font-bold mt-1">Секунд</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <a id="calendar-link" target="_blank" class="py-3.5 px-4 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl border border-slate-700 flex items-center justify-center space-x-2 transition text-sm">
+                        <i class="fa-solid fa-calendar-plus text-cyan-400"></i>
+                        <span>Додати в Google Календар</span>
+                    </a>
+                    <a id="maps-link" href="https://maps.google.com/?q=Львів,+вулиця+Кобилиці+13/2" target="_blank" class="py-3.5 px-4 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black rounded-xl flex items-center justify-center space-x-2 transition text-sm">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <span>Відкрити у Google Maps</span>
+                    </a>
+                </div>
+
+                <!-- Guest Confirmation Summary Box -->
+                <div id="summary-box" class="mt-8 pt-6 border-t border-slate-800 text-left text-sm text-slate-400">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span>Гість: </span><strong id="summary-name" class="text-cyan-300 font-bold">---</strong>
+                        </div>
+                        <button id="retry-btn" class="text-xs text-slate-400 hover:text-cyan-400 underline transition">
+                            Змінити відповіді
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="modal-overlay" class="fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div id="modal-card" class="glass-card max-w-lg w-full p-6 md:p-8 rounded-3xl shadow-2xl transform scale-95 opacity-0 transition-all duration-300 border-cyan-500/40 relative overflow-hidden">
+            
+            <div class="flex justify-between items-center mb-6">
+                <span id="modal-step-badge" class="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-bold uppercase tracking-wider border border-cyan-500/20">
+                    Крок 1 з 4
+                </span>
+                <span class="text-xs text-slate-400 font-bold">NAZAR'S QUEST</span>
+            </div>
+
+            <h3 id="modal-question-title" class="text-2xl font-black mb-3 text-white">
+                Завантаження питання...
+            </h3>
+            
+            <p id="modal-question-desc" class="text-slate-300 text-sm mb-6 leading-relaxed">
+                Опис питання...
+            </p>
+
+            <div id="modal-body-container" class="space-y-3 mb-6 min-h-[120px] flex flex-col justify-center">
+                <!-- Dynamic questions/inputs rendered via JavaScript -->
+            </div>
+
+            <div id="modal-footer" class="flex justify-between items-center pt-2">
+                <button id="modal-next-btn" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black rounded-xl transition text-center uppercase tracking-wider hidden shadow-lg shadow-cyan-500/20">
+                    Продовжити <i class="fa-solid fa-arrow-right ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Humor Alert Modal (replaces standard alert) -->
+    <div id="funny-alert" class="fixed top-6 left-1/2 transform -translate-x-1/2 z-50 glass-card bg-slate-900/95 text-white px-6 py-4 rounded-2xl shadow-2xl border-cyan-500/50 flex items-center space-x-3 hidden animate-bounce">
+        <span class="text-2xl">⚠️</span>
+        <span id="funny-alert-text" class="text-sm font-bold text-cyan-200"></span>
+    </div>
+
+    <footer class="relative z-10 py-6 text-center text-xs text-slate-400 font-semibold">
+        Готуйся до легендарного двіжу
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Floating Background Sparks Generator
+            const particleContainer = document.getElementById('bg-particles-container');
+            const icons = ['⚡', '🚀', '🔥', '✨', '🍕', '🥩'];
+            for (let i = 0; i < 18; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'bg-particle text-lg select-none opacity-40';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.animationDuration = `${7 + Math.random() * 8}s`;
+                particle.style.animationDelay = `${Math.random() * 6}s`;
+                particle.textContent = icons[Math.floor(Math.random() * icons.length)];
+                particleContainer.appendChild(particle);
+            }
+
+            // Audio Synthesizer sound generator
+            let audioCtx = null;
+            let isMusicOn = false;
+            const musicBtn = document.getElementById('music-toggle-btn');
+            
+            musicBtn.addEventListener('click', () => {
+                if (!isMusicOn) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    isMusicOn = true;
+                    playEnergeticBeep();
+                    musicBtn.classList.add('bg-cyan-500/20', 'border-cyan-400');
+                    showHumorAlert("Звукові ефекти увімкнено! 🔊");
+                } else {
+                    isMusicOn = false;
+                    musicBtn.classList.remove('bg-cyan-500/20', 'border-cyan-400');
+                    showHumorAlert("Звуки вимкнено 🔇");
+                }
+            });
+
+            function playEnergeticBeep() {
+                if (!isMusicOn || !audioCtx) return;
+                try {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + 0.15);
+                } catch(e) {}
+            }
+
+            // Custom non-blocking joke alert
+            function showHumorAlert(msg) {
+                const alertEl = document.getElementById('funny-alert');
+                const textEl = document.getElementById('funny-alert-text');
+                textEl.textContent = msg;
+                alertEl.classList.remove('hidden');
+                playEnergeticBeep();
+                setTimeout(() => {
+                    alertEl.classList.add('hidden');
+                }, 3800);
+            }
+
+            // State management
+            let currentStep = 0;
+            const userChoices = {
+                attendance: '',
+                food: [],
+                meatAmount: '',
+                cleaningDuty: '',
+                guestName: ''
+            };
+
+            const welcomeCard = document.getElementById('welcome-card');
+            const startQuestBtn = document.getElementById('start-quest-btn');
+            const invitationContainer = document.getElementById('invitation-container');
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalCard = document.getElementById('modal-card');
+            const modalStepBadge = document.getElementById('modal-step-badge');
+            const modalTitle = document.getElementById('modal-question-title');
+            const modalDesc = document.getElementById('modal-question-desc');
+            const modalBody = document.getElementById('modal-body-container');
+            const modalNextBtn = document.getElementById('modal-next-btn');
+
+            startQuestBtn.addEventListener('click', () => {
+                welcomeCard.classList.add('opacity-0', 'scale-95');
+                setTimeout(() => {
+                    welcomeCard.classList.add('hidden');
+                    renderStep(1);
+                }, 300);
+            });
+
+            function renderStep(step) {
+                currentStep = step;
+                modalBody.innerHTML = '';
+                modalNextBtn.classList.add('hidden');
+
+                modalStepBadge.textContent = `Крок ${step} з 4`;
+                modalOverlay.classList.remove('hidden');
+                setTimeout(() => {
+                    modalCard.classList.remove('scale-95', 'opacity-0');
+                    modalCard.classList.add('scale-100', 'opacity-100');
+                }, 10);
+
+                if (step === 1) {
+                    modalTitle.textContent = "Йоу! Назар робить двіж на день народження! Ти з нами? 🔥";
+                    modalDesc.textContent = "Вибирай відповідь мудро, варіант відмови дуже нестабільний!";
+
+                    const container = document.createElement('div');
+                    container.className = 'flex flex-col gap-3 relative min-h-[110px] justify-center';
+
+                    const yesBtn = document.createElement('button');
+                    yesBtn.className = 'w-full py-4 px-6 bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black rounded-2xl shadow-lg transition text-left flex items-center justify-between text-base uppercase tracking-wider';
+                    yesBtn.innerHTML = `<span>Звісно, я в ділі! 🚀</span> <i class="fa-solid fa-arrow-right"></i>`;
+                    yesBtn.addEventListener('click', () => {
+                        userChoices.attendance = 'Буду 100%';
+                        renderStep(2);
+                    });
+
+                    const noBtn = document.createElement('button');
+                    noBtn.id = 'dodge-no-btn';
+                    noBtn.className = 'w-full py-3.5 px-6 bg-slate-800 text-slate-400 font-bold rounded-2xl border border-slate-700 transition-all text-left text-sm';
+                    noBtn.textContent = "Ні, у мене справи 🏃‍♂️";
+
+                    // Dodging / fleeing button logic
+                    const moveDodgeBtn = () => {
+                        playEnergeticBeep();
+                        const randomX = (Math.random() - 0.5) * 220;
+                        const randomY = (Math.random() - 0.5) * 120;
+                        noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                    };
+
+                    noBtn.addEventListener('mouseenter', moveDodgeBtn);
+                    noBtn.addEventListener('touchstart', (e) => {
+                        e.preventDefault();
+                        moveDodgeBtn();
+                    });
+
+                    noBtn.addEventListener('click', () => {
+                        showHumorAlert("Справи почекають, таке дійство пропустити не можна! 🚀");
+                        userChoices.attendance = 'Буду (мусив погодитись)';
+                        setTimeout(() => renderStep(2), 1200);
+                    });
+
+                    container.appendChild(yesBtn);
+                    container.appendChild(noBtn);
+                    modalBody.appendChild(container);
+                } 
+                else if (step === 2) {
+                    modalTitle.textContent = "Питання по меню 🍕🥩";
+                    modalDesc.textContent = "Обери смаколики, які плануєш трощити (можна декілька):";
+
+                    const foodItems = [
+                        { id: 'shashlik', label: 'Соковитий Шашлик 🥩' },
+                        { id: 'pizza', label: 'Гаряча Піца 🍕', isPizza: true },
+                        { id: 'fries', label: 'Хрустка Картопелька 🍟' },
+                        { id: 'lavash', label: 'Лаваш з начинкою 🌯', isLavash: true },
+                        { id: 'soda', label: 'Солодкі напої 🥤' },
+                        { id: 'alcohol', label: 'Холодне пивко / Алкоголь 🍺', isAlcohol: true }
+                    ];
+
+                    const grid = document.createElement('div');
+                    grid.className = 'grid grid-cols-1 md:grid-cols-2 gap-2.5';
+
+                    foodItems.forEach(item => {
+                        const btn = document.createElement('button');
+                        btn.type = 'button';
+                        btn.dataset.id = item.id;
+                        btn.className = 'food-opt-btn p-3 rounded-xl border border-slate-700 bg-slate-800/80 hover:border-cyan-500/50 text-slate-200 text-sm font-semibold text-left transition flex items-center justify-between';
+                        btn.innerHTML = `<span>${item.label}</span> <i class="fa-solid fa-circle-check opacity-0 text-cyan-400"></i>`;
+
+                        btn.addEventListener('click', () => {
+                            if (item.isAlcohol) {
+                                showAlcoholDialogue(btn);
+                                return;
+                            }
+
+                            if (item.isPizza) {
+                                showPizzaDialogue();
+                                return;
+                            }
+
+                            if (item.isLavash) {
+                                showLavashDialogue();
+                                return;
+                            }
+
+                            toggleFoodOption(btn, item.label);
+                        });
+
+                        grid.appendChild(btn);
+                    });
+
+                    modalBody.appendChild(grid);
+                    modalNextBtn.classList.remove('hidden');
+                } 
+                else if (step === 3) {
+                    modalTitle.textContent = "Перевірка на міцність 🧠⚡";
+                    modalDesc.textContent = "Дай відповідь на стратегічні питання:";
+
+                    const wrap = document.createElement('div');
+                    wrap.className = 'space-y-4';
+
+                    // Subquestion 1: Party role
+                    const q0Box = document.createElement('div');
+                    q0Box.innerHTML = `
+                        <label class="block text-xs font-bold uppercase text-cyan-400 mb-2">1. Твоя головна суперздібність на вечірці?</label>
+                        <select id="role-select" class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-cyan-400 focus:outline-none">
+                            <option value="Фотограф і контент-мейкер 📸" selected>Фотограф і контент-мейкер 📸</option>
+                            <option value="Майстер анекдотів і жартів 🎭">Майстер анекдотів і жартів 🎭</option>
+                            <option value="Головний по пожиранню шашлика 🥩">Головний по пожиранню шашлика 🥩</option>
+                            <option value="Душа компанії і танцюрист 🕺">Душа компанії і танцюрист 🕺</option>
+                            <option value="Стелс гість — незамітно поїдає припаси, спостерігає за святом 🥷">Стелс гість — незамітно поїдає припаси, спостерігає за святом 🥷</option>
+                        </select>
+                    `;
+
+                    // Subquestion 2: Meat capacity
+                    const q1Box = document.createElement('div');
+                    q1Box.innerHTML = `
+                        <label class="block text-xs font-bold uppercase text-cyan-400 mb-2">2. Скільки шматків шашлика ти плануєш з'їсти?</label>
+                        <select id="meat-select" class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-cyan-400 focus:outline-none">
+                            <option value="1-2 шматки (я на дієті)">1-2 шматки (я на дієті)</option>
+                            <option value="Скільки влізе!" selected>Скільки влізе! 🔥</option>
+                            <option value="Поки не зупинять">Поки не зупинять 💪</option>
+                        </select>
+                    `;
+
+                    // Subquestion 3: Cleaning duty
+                    const q2Box = document.createElement('div');
+                    q2Box.innerHTML = `
+                        <label class="block text-xs font-bold uppercase text-cyan-400 mb-2">3. Хто буде прибирати крошки та мити посуд?</label>
+                        <select id="clean-select" class="w-full p-3 rounded-xl bg-slate-900 border border-slate-700 text-white text-sm focus:border-cyan-400 focus:outline-none">
+                            <option value="Назар, це ж його день">Назар, це ж його день 😂</option>
+                            <option value="Автоматична посудомийка">Автоматична посудомийка 🤖</option>
+                            <option value="Я допоможу (поважаю господаря)" selected>Я допоможу (поважаю господаря) 🤝</option>
+                        </select>
+                    `;
+
+                    wrap.appendChild(q0Box);
+                    wrap.appendChild(q1Box);
+                    wrap.appendChild(q2Box);
+                    modalBody.appendChild(wrap);
+
+                    modalNextBtn.classList.remove('hidden');
+                }
+                else if (step === 4) {
+                    modalTitle.textContent = "Підтвердження тусовщика 📝";
+                    modalDesc.textContent = "Введи своє ім'я або позивний, щоб Назар вніс тебе в список VIP-гостей:";
+
+                    const inputWrapper = document.createElement('div');
+                    inputWrapper.className = 'space-y-3';
+
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.id = 'guest-name-input';
+                    input.placeholder = "Наприклад: Саня / Ваня / Аня";
+                    input.className = 'w-full p-4 rounded-xl bg-slate-900 border border-slate-700 text-white placeholder-slate-500 font-bold focus:border-cyan-400 focus:outline-none text-base';
+
+                    inputWrapper.appendChild(input);
+                    modalBody.appendChild(inputWrapper);
+
+                    modalNextBtn.textContent = "Підтвердити участь 🎉";
+                    modalNextBtn.classList.remove('hidden');
+
+                    setTimeout(() => input.focus(), 100);
+                }
+            }
+
+            // Helper function to toggle selection styling and user choice state
+            function toggleFoodOption(btn, label) {
+                btn.classList.toggle('bg-cyan-500/20');
+                btn.classList.toggle('border-cyan-400');
+                const checkIcon = btn.querySelector('.fa-circle-check');
+                if (checkIcon) checkIcon.classList.toggle('opacity-0');
+
+                if (userChoices.food.includes(label)) {
+                    userChoices.food = userChoices.food.filter(f => f !== label);
+                } else {
+                    userChoices.food.push(label);
+                }
+            }
+
+            // Interactive dialogue when alcohol is selected
+            function showAlcoholDialogue(btn) {
+                playEnergeticBeep();
+
+                const alcModal = document.createElement('div');
+                alcModal.className = 'fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in';
+                alcModal.innerHTML = `
+                    <div class="glass-card max-w-md w-full p-6 md:p-8 rounded-3xl text-center border-red-500/50 shadow-2xl space-y-5 transform scale-100 transition-all">
+                        <div class="text-5xl animate-bounce">🚫🍻</div>
+                        <h4 class="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
+                            Ай яй яй! 🛑
+                        </h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            На святі діє міжнародний суворий закон: <strong class="text-cyan-400">100% без алкоголю</strong>! Тільки безалкогольний двіж та солодкі напої 🥤
+                        </p>
+                        <button id="confirm-alc-dialogue" class="w-full py-3.5 bg-gradient-to-r from-red-500 to-rose-600 hover:from-red-400 hover:to-rose-500 text-slate-950 font-black rounded-xl transition uppercase tracking-wider text-sm shadow-lg shadow-red-500/20">
+                            Зрозуміло, скасовую 🙅‍♂️
+                        </button>
+                    </div>
+                `;
+
+                document.body.appendChild(alcModal);
+
+                document.getElementById('confirm-alc-dialogue').addEventListener('click', () => {
+                    document.body.removeChild(alcModal);
+                    btn.classList.remove('bg-slate-800/80', 'hover:border-cyan-500/50');
+                    btn.classList.add('bg-red-950/40', 'border-red-500/40', 'text-slate-500', 'line-through', 'cursor-not-allowed');
+                    btn.disabled = true;
+                    btn.innerHTML = `<span>${btn.textContent.trim()} (ЗАБЛОКОВАНО)</span> <i class="fa-solid fa-lock text-red-400 opacity-100"></i>`;
+                });
+            }
+
+            // Interactive dialogue when pizza is selected -> automatically selects Shashlik
+            function showPizzaDialogue() {
+                playEnergeticBeep();
+                
+                const pizzaModal = document.createElement('div');
+                pizzaModal.className = 'fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in';
+                pizzaModal.innerHTML = `
+                    <div class="glass-card max-w-md w-full p-6 md:p-8 rounded-3xl text-center border-cyan-500/50 shadow-2xl space-y-5 transform scale-100 transition-all">
+                        <div class="text-5xl animate-bounce">🍕🛑</div>
+                        <h4 class="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
+                            Ей, яка піца в четвер?! 
+                        </h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Смачну піцу поїш у суботу... В четвер <strong class="text-cyan-400">15 жовтня</strong> на тебе чекає гарячий та соковитий <strong class="text-cyan-300">ШАШЛИЧОК</strong>! 🥩🔥
+                        </p>
+                        <p class="text-xs text-slate-400 italic">
+                            (Автоматично перемикаємо твій вибір на Шашлик 😉)
+                        </p>
+                        <button id="confirm-pizza-dialogue" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black rounded-xl transition uppercase tracking-wider text-sm shadow-lg shadow-cyan-500/20">
+                            Окей, хочу шашлик! 🥩
+                        </button>
+                    </div>
+                `;
+
+                document.body.appendChild(pizzaModal);
+
+                document.getElementById('confirm-pizza-dialogue').addEventListener('click', () => {
+                    document.body.removeChild(pizzaModal);
+
+                    const shashlikBtn = modalBody.querySelector('button[data-id="shashlik"]');
+                    const shashlikLabel = 'Соковитий Шашлик 🥩';
+
+                    if (shashlikBtn && !userChoices.food.includes(shashlikLabel)) {
+                        toggleFoodOption(shashlikBtn, shashlikLabel);
+                    }
+
+                    showHumorAlert("Шашлик успішно додано до твого замовлення! 🥩🔥");
+                });
+            }
+
+            // Interactive dialogue when lavash is selected
+            function showLavashDialogue() {
+                playEnergeticBeep();
+
+                const lavashModal = document.createElement('div');
+                lavashModal.className = 'fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in';
+                lavashModal.innerHTML = `
+                    <div class="glass-card max-w-md w-full p-6 md:p-8 rounded-3xl text-center border-cyan-500/50 shadow-2xl space-y-5 transform scale-100 transition-all">
+                        <div class="text-5xl animate-bounce">🌯🤔</div>
+                        <h4 class="text-xl md:text-2xl font-black text-white uppercase tracking-tight">
+                            Серйозно??
+                        </h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Лаваш — це цікаво, але справжній король вечора — це соковитий <strong class="text-cyan-300">ШАШЛИК</strong>! 🥩🔥
+                        </p>
+                        <p class="text-xs text-slate-400 italic">
+                            (Автоматично додаємо шашлик до твого меню 😉)
+                        </p>
+                        <button id="confirm-lavash-dialogue" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black rounded-xl transition uppercase tracking-wider text-sm shadow-lg shadow-cyan-500/20">
+                            Зрозуміло, давай шашлик! 🥩
+                        </button>
+                    </div>
+                `;
+
+                document.body.appendChild(lavashModal);
+
+                document.getElementById('confirm-lavash-dialogue').addEventListener('click', () => {
+                    document.body.removeChild(lavashModal);
+
+                    const shashlikBtn = modalBody.querySelector('button[data-id="shashlik"]');
+                    const shashlikLabel = 'Соковитий Шашлик 🥩';
+
+                    if (shashlikBtn && !userChoices.food.includes(shashlikLabel)) {
+                        toggleFoodOption(shashlikBtn, shashlikLabel);
+                    }
+
+                    showHumorAlert("Шашлик успішно додано! 🥩🔥");
+                });
+            }
+
+            modalNextBtn.addEventListener('click', () => {
+                if (currentStep === 2) {
+                    if (userChoices.food.length === 0) {
+                        userChoices.food.push("Все підряд!");
+                    }
+                    renderStep(3);
+                } else if (currentStep === 3) {
+                    const meatSelect = document.getElementById('meat-select');
+                    const cleanSelect = document.getElementById('clean-select');
+                    if (meatSelect) userChoices.meatAmount = meatSelect.value;
+                    if (cleanSelect) userChoices.cleaningDuty = cleanSelect.value;
+                    renderStep(4);
+                } else if (currentStep === 4) {
+                    const nameInput = document.getElementById('guest-name-input');
+                    const name = nameInput ? nameInput.value.trim() : '';
+
+                    if (!name) {
+                        showHumorAlert("Введи ім'я, щоб Назар знав, кого зустрічати! 😉");
+                        return;
+                    }
+
+                    userChoices.guestName = name;
+                    finishQuest();
+                }
+            });
+
+            function finishQuest() {
+                modalCard.classList.remove('scale-100', 'opacity-100');
+                modalCard.classList.add('scale-95', 'opacity-0');
+                setTimeout(() => {
+                    modalOverlay.classList.add('hidden');
+                    invitationContainer.classList.remove('hidden');
+
+                    document.getElementById('summary-name').textContent = userChoices.guestName;
+
+                    confetti({
+                        particleCount: 150,
+                        spread: 90,
+                        origin: { y: 0.6 },
+                        colors: ['#00B4D8', '#5BC0BE', '#3A506B', '#FFFFFF']
+                    });
+
+                    showHumorAlert(`Красавчик, ${userChoices.guestName}! Твоє місце заброньовано! 🔥`);
+                }, 300);
+            }
+
+            // Retry/change responses button
+            document.getElementById('retry-btn').addEventListener('click', () => {
+                invitationContainer.classList.add('hidden');
+                userChoices.food = [];
+                renderStep(1);
+            });
+
+            // Dynamic Countdown Timer (Target: Oct 15, 2026 17:00:00)
+            const targetTime = new Date('2026-10-15T17:00:00').getTime();
+
+            function updateCountdown() {
+                const now = new Date().getTime();
+                const diff = targetTime - now;
+
+                if (diff > 0) {
+                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                    document.getElementById('days').textContent = String(days).padStart(2, '0');
+                    document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                    document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                    document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+                } else {
+                    document.getElementById('days').textContent = '00';
+                    document.getElementById('hours').textContent = '00';
+                    document.getElementById('minutes').textContent = '00';
+                    document.getElementById('seconds').textContent = '00';
+                }
+            }
+
+            setInterval(updateCountdown, 1000);
+            updateCountdown();
+
+            // Google Calendar direct link builder
+            const calTitle = encodeURIComponent("День Народження Назара 🚀");
+            const calDetails = encodeURIComponent("Двіж, шашлики, піца та святкування! Локація: м. Львів, вул. Кобилиці 13/2");
+            const calLocation = encodeURIComponent("м. Львів, вул. Кобилиці 13/2");
+            const gCalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${calTitle}&dates=20261015T150000Z/20261015T210000Z&details=${calDetails}&location=${calLocation}`;
+            
+            document.getElementById('calendar-link').href = gCalUrl;
+        });
+    </script>
+</body>
+</html>
